@@ -1,3 +1,7 @@
+const express = require('express')
+const app = express()
+const port = process.env.PORT || 4000 
+
 const TelegramBot = require("node-telegram-bot-api");
 const cron = require("node-cron");
 const fs = require("fs");
@@ -83,7 +87,7 @@ function resetDailyState() {
 }
 
 cron.schedule(
-  '53 13 * * 1,5',
+  '21 14 * * 1,5',
   async () => {
     //Day of week → Monday (1), Friday (5). Hour → 11 AM Minute → 52 Month (every) Day of month (every)
     try {
@@ -121,3 +125,10 @@ bot.on("poll_answer", (answer) => {
   save();
 });
 
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})

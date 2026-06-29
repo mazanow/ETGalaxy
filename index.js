@@ -83,7 +83,7 @@ function resetDailyState() {
 }
 
 cron.schedule(
-  '10 13 * * 1,5',
+  '30 13 * * 1,5',
   async () => {
     //Day of week → Monday (1), Friday (5). Hour → 11 AM Minute → 52 Month (every) Day of month (every)
     try {

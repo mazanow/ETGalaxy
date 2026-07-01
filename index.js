@@ -57,12 +57,28 @@ function tag(user) {
 function addPlayer(user) {
   if (!data.players.some((p) => p.id === user.id)) {
     // check if already stored
-    data.players.push({
-      name: user.first_name,
-      username: user.username,
-      id: user.id,
-    });
-    save();
+   // data.players.push({
+  //    name: user.first_name,
+  //    username: user.username,
+  //    id: user.id,
+  //  });
+  //  save();
+
+        const mention = user.username
+  ? `@${user.username}`
+  : `<a href="tg://user?id=${user.id}">${user.first_name}</a>`;
+
+await bot.sendMessage(
+  CHAT_ID,
+  `🎉 Welcome ${mention}!
+
+You are assigned to take the 🥅 goal and 🧊 cooler today.
+
+If you have any issues, please contact the coordinator.`,
+  {
+    parse_mode: "HTML",
+  }
+  );
   }
 }
 
@@ -87,7 +103,7 @@ function resetDailyState() {
 }
 
 cron.schedule(
-  '00 11 * * 1,2,3,5',
+  '7 14 * * 1,2,3,5',
   async () => {
     //Day of week → Monday (1), Friday (5). Hour → 11 AM Minute → 52 Month (every) Day of month (every)
     try {

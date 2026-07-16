@@ -102,6 +102,11 @@ function resetDailyState() {
   // console.log("STATE AFTER RESET:", data);
 }
 
+(async () => {
+  data.history.forEach((p) => {
+  bot.sendMessage(chatId, `${tag(p)} (${p.count})`);
+});
+  
 cron.schedule(
   '59 11 * * 1,5',
   async () => {

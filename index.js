@@ -1,3 +1,5 @@
+// Telegram does NOT let bots fetch full poll results by pollId later. You only get poll data in real time via poll_answer.
+
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000 

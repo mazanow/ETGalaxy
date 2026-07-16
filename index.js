@@ -1,20 +1,21 @@
 // Telegram does NOT let bots fetch full poll results by pollId later. You only get poll data in real time via poll_answer.
-
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 4000 
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 4000;
 
 const TelegramBot = require("node-telegram-bot-api");
 const cron = require("node-cron");
-const fs = require("fs");
-const { log } = require("console");
 
 const TOKEN = process.env.BOT_TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
 
 const bot = new TelegramBot(TOKEN, { polling: true });
 
-const FILE = "./data.json";
+const db = require("./mongodb");
+
+(async () => {
+  await db.connectDB();
+})();
 
 let data = {
   players: [], // { "name": "Test", "username": "test", "id": 12345 }
@@ -26,14 +27,17 @@ let data = {
   currentPollId: null,
 };
 
-// Load file safely
-if (fs.existsSync(FILE)) {
-  try {
-    data = JSON.parse(fs.readFileSync(FILE));
-  } catch (e) {
-    console.error("⚠️ Failed to load data.json, using defaults");
-  }
-}
+// const fs = require("fs");
+// const FILE = "./data.json";
+
+// // Load file safely
+// if (fs.existsSync(FILE)) {
+//   try {
+//     data = JSON.parse(fs.readFileSync(FILE));
+//   } catch (e) {
+//     console.error("⚠️ Failed to load data.json, using defaults");
+//   }
+// }
 
 // ---- SAVE ----
 function save() {

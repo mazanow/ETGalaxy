@@ -109,7 +109,7 @@ function resetDailyState() {
 }
   
 cron.schedule(
-  '59 11 * * 1,5',
+  '00 10 * * 1,5',
   async () => {
     //Day of week → Monday (1), Friday (5). Hour → 11 AM Minute → 52 Month (every) Day of month (every)
     try {
@@ -122,8 +122,8 @@ cron.schedule(
 
       const poll = await bot.sendPoll(
         CHAT_ID,
-        "Today’s soccer game: 6:00 PM \nLocation: J. J High School \nPlease come up with Yellow/Blue vest or two different jersey.",
-        ["In @ 6:00 PM", "In @ 6:30 PM", "May be", "Out"],
+        "Today’s soccer game: 6:30 PM \nLocation: J. J High School \nPlease come up with Yellow/Blue vest or two different jersey.",
+        ["In", "Out"],
         { is_anonymous: false },
       );
       data.currentPollId = poll.poll.id;
